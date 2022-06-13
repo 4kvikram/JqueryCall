@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CRUD_Application.DataAccessLayer\CRUD_Application.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\CRUD_Application.Models\CRUD_Application.Models.csproj" />
+  </ItemGroup>
+
+</Project>

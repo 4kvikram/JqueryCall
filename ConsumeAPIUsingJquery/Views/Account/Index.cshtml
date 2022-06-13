@@ -1,0 +1,300 @@
+﻿<div style="    float: right; padding-bottom: 11px;">
+	<button onclick="    ResetForm();" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+		Add User
+	</button>
+</div>
+
+
+<table class="row-border" id="usertable">
+	<thead>
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email</th>
+			<th>Phone</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody id="tblhead">
+		<tr>
+			<td>@asdfa</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+	 aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="userfrom">
+				<div class="modal-body">
+
+					<input type="text" id="UserId" hidden>
+					<div class="form-group">
+						<label for="FistName">First Name </label>
+						<input type="text" class="form-control" id="FistName" aria-describedby="emailHelp" placeholder="Enter First name">
+					</div>
+					<div class="form-group">
+						<label for="LastName">Last Name</label>
+						<input type="text" class="form-control" id="LastName" aria-describedby="emailHelp" placeholder="Enter Last Name">
+					</div>
+
+					<div class="form-group">
+						<label for="Mobile">Mobile: </label>
+						<input type="text" class="form-control" id="Mobile" aria-describedby="emailHelp" placeholder="Enter Last Name">
+					</div>
+
+					<div class="form-group">
+						<label for="Email">Email </label>
+						<input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter email">
+						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					</div>
+					<div class="form-group" id="passwordsection">
+						<label for="Password">Password</label>
+						<input type="password" class="form-control" id="Password" placeholder="Password">
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" onclick="SaveUser();">Save changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+
+<script>
+
+	$(document).ready(function() {
+		console.log("ready!");
+		GetAllUserData();
+	});
+	function Deleteuser(id) {
+		console.log(id);
+
+		if (confirm("Are You Want To delete This Record..!") == true) {
+			//call delete ajax
+			$.ajax({
+				type: "GET",
+				url: "http://localhost:5120/api/Account/DeleteUser",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				data: { "id": id },
+				success: function(data) {
+					console.log(data);
+					if (data.isSuccess) {
+						alert("Record Deleted..");
+						GetAllUserData();
+					}
+					else {
+						alert("Something went wrong....");
+					}
+				},
+				failure: function(data) {
+					alert(data.responseText);
+				},
+				error: function(data) {
+					alert(data.responseText);
+				}
+			});
+
+			//ajax call end
+			console.log("redcord deleted")
+
+		} else {
+			//cancle it
+		}
+	}
+
+
+	function GetUserById(id) {
+		$("#passwordsection").hide();
+		$("#Email").attr('readonly', 'readonly');
+
+		console.log(id);
+		$.ajax({
+			type: "GET",
+			url: "http://localhost:5120/api/Account/GetUserById",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: { "id": id },
+			success: function(data) {
+				console.log(data);
+				console.log(data.data)
+				var record = data.data;
+
+				$("#UserId").val(record.id);
+				$("#FistName").val(record.fistName);
+				$("#LastName").val(record.lastName);
+				$("#Mobile").val(record.mobile);
+				$("#Email").val(record.email);
+			},
+
+			failure: function(data) {
+				alert(data.responseText);
+			},
+			error: function(data) {
+				alert(data.responseText); s
+			}
+		});
+	}
+
+	function GetAllUserData() {
+
+		$.ajax({
+			type: "GET",
+			url: "http://localhost:5120/api/Account/GetAllUser",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			//data:{"name":name,"Email":email},
+			success: function(data) {
+				console.log(data);
+				console.log(data.data.length)
+				var res = data.data;
+				$("#tblhead").empty();
+				for (var i = res.length - 1; i >= 0; i--) {
+					var str = "<tr>";
+					str = str + "<td>" + res[i].fistName + "</td>";
+					str = str + "<td>" + res[i].lastName + "</td>";
+					str = str + "<td>" + res[i].email + "</td>";
+					str = str + "<td>" + res[i].mobile + "</td>";
+					str = str + "<td>";
+					str = str + "<a onclick='Deleteuser(" + res[i].id + ");' class='btn btn-danger'>Delete</a>";
+					str = str + "<a data-toggle='modal' data-target='#exampleModalLong' onclick='GetUserById(" + res[i].id + ");' class='btn btn-secondary'  style='margin-left: 14px;'>Edit</a>";
+					str = str + "</td>";
+					str = str + "</tr>";
+					$("#tblhead").append(str);
+				}
+				$('#usertable').DataTable();
+				//$("#txtid").val("");
+			},
+
+			failure: function(data) {
+				alert(data.responseText);
+			},
+			error: function(data) {
+				alert(data.responseText);
+			}
+		});
+	}
+
+
+
+
+
+
+
+	function SaveUser() {
+
+		var id = $("#UserId").val();
+		console.log(id);
+		var intId = parseInt(id);
+		if (intId > 0) {
+			console.log("updateuser");
+			UpdateUser();
+		}
+		else {
+			console.log("adduser")
+			AddUser();
+		}
+	}
+
+
+	function UpdateUser() {
+
+		var requestData = {
+			FistName: $("#FistName").val(),
+			LastName: $("#LastName").val(),
+			Mobile: $("#Mobile").val(),
+			Email: $("#Email").val(),
+			Password: $("#Password").val()
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:5120/api/Account/Registration",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: JSON.stringify(requestData),
+			success: function(data) {
+				console.log(data);
+				$("#exampleModalLong").hide();
+				$(".show").removeClass("modal-backdrop");
+				$("body").removeClass("modal-open");
+
+				GetAllUserData();
+			},
+
+			failure: function(data) {
+				console.log(data);
+			},
+			error: function(data) {
+				console.log(data);
+			}
+		});
+	}
+
+
+	function AddUser() {
+		var requestData = {
+			FistName: $("#FistName").val(),
+			LastName: $("#LastName").val(),
+			Mobile: $("#Mobile").val(),
+			Email: $("#Email").val(),
+			Password: $("#Password").val()
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:5120/api/Account/Registration",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: JSON.stringify(requestData),
+			success: function(data) {
+				console.log(data);
+
+                closeAddModel();
+				GetAllUserData();
+			},
+
+			failure: function(data) {
+				console.log(data);
+			},
+			error: function(data) {
+				console.log(data);
+			}
+		});
+	}
+	function closeAddModel() {
+		$("#exampleModalLong").hide();
+		$(".show").removeClass("modal-backdrop");
+		$("body").removeClass("modal-open");
+	}
+
+	function ResetForm() {
+		$("#passwordsection").show();
+		$("#Email").removeAttr('readonly');
+		$("#UserId").val("");
+		$("#FistName").val("");
+		$("#LastName").val("");
+		$("#Mobile").val("");
+		$("#Email").val("");
+		$("#Password").val("");
+	}
+</script>
