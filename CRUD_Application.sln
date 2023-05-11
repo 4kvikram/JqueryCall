@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Application.Models", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Application.API", "CRUD_Application.API\CRUD_Application.API.csproj", "{61F1C909-073E-4554-A05D-01373A99D21A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsumeAPIUsingJquery", "ConsumeAPIUsingJquery\ConsumeAPIUsingJquery.csproj", "{DF8BE5C7-B205-426C-8081-6A2316866AAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsumeAPIUsingJquery", "ConsumeAPIUsingJquery\ConsumeAPIUsingJquery.csproj", "{DF8BE5C7-B205-426C-8081-6A2316866AAF}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CRUD.MVC", "CRUD.MVC\CRUD.MVC.fsproj", "{F8724178-582C-42CD-9033-8EC37FE4B8B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{DF8BE5C7-B205-426C-8081-6A2316866AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF8BE5C7-B205-426C-8081-6A2316866AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF8BE5C7-B205-426C-8081-6A2316866AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8724178-582C-42CD-9033-8EC37FE4B8B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8724178-582C-42CD-9033-8EC37FE4B8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8724178-582C-42CD-9033-8EC37FE4B8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8724178-582C-42CD-9033-8EC37FE4B8B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

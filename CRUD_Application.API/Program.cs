@@ -8,17 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 //register your dbcontext class
 builder.Services.AddDbContext<AppDbContext>(
     x =>
 x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 
 );
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 //builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserRepository, UserService>();
