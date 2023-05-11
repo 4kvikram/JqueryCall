@@ -65,7 +65,10 @@
 						<label for="Password">Password</label>
 						<input type="password" class="form-control" id="Password" placeholder="Password">
 					</div>
-
+					<div class="form-group" id="passwordsection">
+						<label for="Photo">Photo</label>
+						<input type="file" class="form-control" id="Photo" placeholder="Image">
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -252,20 +255,33 @@
 
 
 	function AddUser() {
-		var requestData = {
-			FistName: $("#FistName").val(),
-			LastName: $("#LastName").val(),
-			Mobile: $("#Mobile").val(),
-			Email: $("#Email").val(),
-			Password: $("#Password").val()
-		}
+		var files=document.getElementById('Photo').files[0];
+		var formData = new FormData();
+		 formData.append("file", files, files.name);
+		 formData.append("FistName", $("#FistName").val());
+		 formData.append("LastName",$("#LastName").val() );
+		 formData.append("Mobile",$("#Mobile").val() );
+		 formData.append("Email",$("#Email").val() );
+		 formData.append("Password",$("#Password").val() );
+
+		//var requestData = {
+		//	FistName: $("#FistName").val(),
+		//	LastName: $("#LastName").val(),
+		//	Mobile: $("#Mobile").val(),
+		//	Email: $("#Email").val(),
+		//	Password: $("#Password").val()
+		//}
 
 		$.ajax({
 			type: "POST",
 			url: "http://localhost:5120/api/Account/Registration",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify(requestData),
+			 processData: false,
+             //   contentType: false,
+				cache: false,
+			//data: JSON.stringify(requestData),
+			data:formData,
 			success: function(data) {
 				console.log(data);
 

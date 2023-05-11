@@ -19,8 +19,13 @@ namespace CRUD_Application.API.Controllers
 
         [HttpPost]
         [Route("Registration")]
-        public IActionResult Registration(RegistrationModel model)
+        public IActionResult Registration([FromBody]RegistrationModel model)
         {
+            //RegistrationModel model=new RegistrationModel();
+            var a = Request;
+
+            var file = Request.Form.Files[0];
+
             var result = _userRepository.AddUsers(model);
             if (result)
             {

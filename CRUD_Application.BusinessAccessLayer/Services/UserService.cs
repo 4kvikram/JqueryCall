@@ -62,6 +62,7 @@ namespace CRUD_Application.BusinessAccessLayer.Services
 
         public List<RegistrationModel> GetAllUsers()
         {
+            return null;
             var data = context.Users.FromSqlRaw("select * from tblUsersDetails").Select(
                 x => new RegistrationModel()
                 {
